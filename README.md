@@ -26,7 +26,7 @@
 
 <p><mark>3개월차 개린이의 회고 : </mark></p>
 
-<div style="height: auto; width: 60%; border:1px solid gray; border-radius:3% ; margin:10px ; padding:20px">
+<div style="height: auto; width: 60%; border:3px solid gray; border-radius:3% ; margin:10px ; padding:20px; background:white; color:green; ">
 프로그래밍은 그동안 내가 일반적으로 해오던 공부들과는 상이했다.<br>
 문학이나 언어공부 처럼 순차적으로 지식을 쌓는다기 보다는<br>
 오히려 풍경화를 그리듯 연필로 전체적인 밑그림을 먼저 그리고, <br>
