@@ -13,7 +13,7 @@
 
 ---
 
-#####절차
+<절차>
 <ol>
 <li>클라이언트가 서버에 Resource를 요청합니다.
 <li>서버에서는 HTTP Request를 통해 쿠키에서 Session id를 확인을 한 후에 없으면 Set-Cookie를 통해 새로 발행한 Session-id 보냅니다.
