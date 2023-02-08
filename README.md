@@ -12,6 +12,7 @@
 
 
 22.12.24 : Spring Boot , HTML 디렉토리 생성하고 TIL 이동
+23.02.05 : 정보처리기사 공부 시작, Computer Science 디렉토리 생성
 
 ---
 
