@@ -50,3 +50,4 @@ if(skills.includes("Javascript")&&skills.includes("React")){
 let age = 50;
 let answer = age <= 40 ? "청년입니다" : "중년입니다";
 console.log(answer);
+
