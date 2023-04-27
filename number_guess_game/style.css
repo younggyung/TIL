@@ -1,0 +1,12 @@
+body{
+    background-color: black;
+    text-align: center;
+}
+
+#wrapper{
+    margin-top: 20%;
+}
+
+h1,div {
+    color: white;
+}
