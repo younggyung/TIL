@@ -22,29 +22,35 @@ body{
 
 .task-area{
   border: 1px solid lightgray;
+  margin-top: 1vh;
 }
 
 #underLine{
   height: 4px;
-  background-color: aqua;
+  background-color: rgb(109, 109, 109);
   position: absolute;
-  width : 70px;
+  width : 64px;
   left : 0px;
-  top : 52px;
+  top : 56px;
+  transition: 0.2s;
   padding : 0px;
 }
 
+.task-done span{
+  text-decoration: line-through;
+  color: gray;
+}
 
 .task{
   display: flex;
   justify-content: space-between;
+  position: relative;
+  width: 100%;
 }
 
-
-.task-done{
-  text-decoration: line-through;
+.task:first-child{
+  margin-top: 1vh;
 }
-
 
 .buttons img{
   max-width: 27px;
@@ -58,4 +64,35 @@ body{
 
 .task-tabs{
   cursor: pointer;
+}
+
+#task-input{
+border: 0px;
+display: flex;
+max-height: 90%;
+background-color: inherit;
+margin-left: 1em;
+}
+
+#task-input:focus{
+  outline: none;
+}
+
+#add-button{
+  border-radius: 40%;
+  border-style: unset;
+  max-width: fit-content;
+  max-height: 90%; 
+  font-weight: bold;
+  margin-right: 1em;
+}
+
+.input-area{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  height: 40px;
+  max-width: fit-content;
+  border-radius: 30px;
 }

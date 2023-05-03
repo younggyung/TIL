@@ -1,22 +1,22 @@
-//유저가 값을 입력한다.
-//+버튼을 클릭하면 아이템추가
-//delete 버튼 누르면 할일 삭제
-//check버튼 누르면 할일이 끝나면서 취소선
-  //1.버튼 누름에 따라 객체의 isComplete가 true false로 바뀌기
-  //2.true일때 취소선 / false일때 그대로 
-//메뉴탭을 누를때 마다 언더바 이동
-//각각의 상태에 맞게 아이템 표시
-//전체탭을 누르면 다시 전체 아이템으로 돌아옴
 let filteredList=[];
 let mode ='all';
 let taskList = [];
 let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
-addButton.addEventListener("click",addTask);
 let tabs = document.querySelectorAll(".task-tabs div")
+
 for(let i = 1; i<tabs.length;i++){
   tabs[i].addEventListener("click",function(event){filter(event)});
 }
+addButton.addEventListener("click",addTask);
+//엔터키로 추가기능
+taskInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    addTask();
+  }
+});
+
+
 
 function addTask(){
   let task={
@@ -25,33 +25,32 @@ function addTask(){
     id:randomIDGenerator()
           };
   taskList.push(task);
-  console.log(taskList);
-  render();
+  taskInput.value="";
+  filter();
 }
 
 function render(){
   let list =[];
+  let resultHTML ='';
+
   if(mode =='all'){
     list = taskList;
-  }else if(mode =='inprogress'){
-    list = filteredList;
-  }else if(mode =='done'){
+  }else{
     list = filteredList;
   }
-
-  let resultHTML ='';
+  
   for(let i = 0 ; i<list.length; i++){
-    if(list[i].isComplete == true){
-      resultHTML += `<div class="task">
-      <div class="task-done">${list[i].taskContent}</div>
+    if(list[i].isComplete){
+      resultHTML += `<div class="task task-done" id="${list[i].id}">
+      <span>${list[i].taskContent}</span>
         <div class="buttons">
-          <button onclick="check('${list[i].id}')"><img src="images/check.png"></button>
+          <button onclick="check('${list[i].id}')"><img src="images/undo-circular-arrow.png" style="max-width:22px;"></button>
           <button onclick="deleteTask('${list[i].id}')"><img src="images/trash.png"></button>
           </div>
         </div>`;
     }else{
-    resultHTML += `<div class="task">
-    <div>${list[i].taskContent}</div>
+    resultHTML += `<div class="task" id="${list[i].id}">
+    <span>${list[i].taskContent}</span>
       <div class="buttons">
         <button onclick="check('${list[i].id}')"><img src="images/check.png"></button>
         <button onclick="deleteTask('${list[i].id}')"><img src="images/trash.png"></button>
@@ -64,58 +63,54 @@ function render(){
 
 function check(id){
   for(let i = 0; i<taskList.length;i++){
-    if(taskList[i].id==id){
+    if(taskList[i].id === id){
       taskList[i].isComplete = !taskList[i].isComplete;
       break;
     }
   }
-  render();
+  filter();
 }
 
 function deleteTask(id){
   for(let i = 0; i<taskList.length;i++){
-  if(taskList[i].id == id){
-    taskList.splice(i,1);
-    break;
+    if(taskList[i].id == id){
+      taskList.splice(i,1);
+      break;
     }
   }
-  render();
+  filter();
 }
+
+//클릭이벤트를 변수로 넣어주는 filter()와
+//그냥 filter는 다르다. 그래서 클릭이벤트가 없을때
+//즉, 초기상태에서는 if문의 코드가 실행 x
 
 
 function filter(event){
+  if(event){
   mode = event.target.id;
-  filteredList = [];
   document.getElementById("underLine").style.width = event.target.offsetWidth + "px";
   document.getElementById("underLine").style.top = event.target.offsetTop + event.target.offsetHeight + "px";
   document.getElementById("underLine").style.left = event.target.offsetLeft + "px";
-  
-  if(mode == 'all'){
-    render();
-  }else if(mode =='inprogress'){
+  }
+  filteredList = [];
+  if(mode =='inprogress'){
     for(let i = 0; i<taskList.length;i++){
       if(taskList[i].isComplete == false){
         filteredList.push(taskList[i]);
       }
-    }
-    render();
+    };
   }else if(mode =='done'){
     for(let i=0; i<taskList.length; i++){
       if(taskList[i].isComplete == true){
         filteredList.push(taskList[i]);
       }
     }
-  }render();
+  }
+  render();
 }
 
-//엔터키로 추가
-taskInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    addTask();
-  }
-});
-
-//랜덤한 id값 생성, check 버튼을 눌렀을때 어떤 오브젝트인지 식별하기 위해서 !
+//랜덤한 id값 생성, check 버튼을 눌렀을때 어떤 오브젝트인지 식별하기 위해서!
 function randomIDGenerator(){
   return '_' + Math.random().toString(34).substring(2,9);
 }
