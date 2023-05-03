@@ -45,6 +45,17 @@ body{
   text-decoration: line-through;
 }
 
-#delete{
-  background: url(images/trash.png);
+
+.buttons img{
+  max-width: 27px;
+  max-height: 27px;
+}
+
+.buttons button{
+  background-color: unset;
+  border: none;
+}
+
+.task-tabs{
+  cursor: pointer;
 }

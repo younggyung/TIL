@@ -12,7 +12,6 @@ let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
 addButton.addEventListener("click",addTask);
 
-
 function addTask(){
   let task={
     taskContent:taskInput.value, 
@@ -25,23 +24,25 @@ function addTask(){
   render();
 }
 
+
 function render(){
+document.getElementById("underLine").style["margin-left"]=0;
   let resultHTML ='';
   for(let i = 0 ; i<taskList.length; i++){
     if(taskList[i].isComplete == true){
       resultHTML += `<div class="task">
       <div class="task-done">${taskList[i].taskContent}</div>
         <div class="buttons">
-          <button onclick="check('${taskList[i].id}')">check</button>
-          <button onclick="deleteTask('${taskList[i].id}')">Delete</button>
+          <button onclick="check('${taskList[i].id}')"><img src="images/check.png"></button>
+          <button onclick="deleteTask('${taskList[i].id}')"><img src="images/trash.png"></button>
           </div>
         </div>`;
     }else{
     resultHTML += `<div class="task">
     <div>${taskList[i].taskContent}</div>
       <div class="buttons">
-        <button onclick="check('${taskList[i].id}')">check</button>
-        <button onclick="deleteTask('${taskList[i].id}')">Delete</button>
+        <button onclick="check('${taskList[i].id}')"><img src="images/check.png"></button>
+        <button onclick="deleteTask('${taskList[i].id}')"><img src="images/trash.png"></button>
       </div>
     </div>`
   }
@@ -81,3 +82,44 @@ taskInput.addEventListener('keydown', (event) => {
 function randomIDGenerator(){
   return '_' + Math.random().toString(34).substring(2,9);
 }
+
+function ShowInProgress(){
+  //언더바 이동
+  document.getElementById("underLine").outerHTML = `<div id="underLine" style="margin-left: 70px;"></div>`;
+
+  //필터링
+  let resultHTML ='';
+  for(let i = 0 ; i<taskList.length; i++){
+    if(taskList[i].isComplete == false){
+      resultHTML += `<div class="task">
+      <div class="task">${taskList[i].taskContent}</div>
+        <div class="buttons">
+          <button onclick="check('${taskList[i].id}')"><img src="images/check.png"></button>
+          <button onclick="deleteTask('${taskList[i].id}')"><img src="images/trash.png"></button>
+          </div>
+        </div>`;
+    }
+  }
+  document.getElementById("task-board").innerHTML = resultHTML;
+}
+
+
+function ShowDone(){
+  //언더바 이동
+document.getElementById("underLine").outerHTML = `<div id="underLine" style="margin-left: 140px;"></div>`;
+//필터링
+  let resultHTML ='';
+  for(let i = 0 ; i<taskList.length; i++){
+    if(taskList[i].isComplete == true){
+      resultHTML += `<div class="task">
+      <div class="task-done">${taskList[i].taskContent}</div>
+        <div class="buttons">
+          <button onclick="check('${taskList[i].id}')"><img src="images/check.png"></button>
+          <button onclick="deleteTask('${taskList[i].id}')"><img src="images/trash.png"></button>
+          </div>
+        </div>`;
+    }
+  }
+  document.getElementById("task-board").innerHTML = resultHTML;
+}
+
