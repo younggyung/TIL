@@ -6,6 +6,8 @@ body{
 }
 
 .container{
+  margin-top: 10vh;
+  margin-bottom: 100vh;
   min-height: 100vh;
   background-color: aliceblue;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
@@ -79,20 +81,32 @@ margin-left: 1em;
 }
 
 #add-button{
-  border-radius: 40%;
-  border-style: unset;
-  max-width: fit-content;
-  max-height: 90%; 
-  font-weight: bold;
-  margin-right: 1em;
+  border: 0;
+  margin-right: 0.8rem;
+  cursor: pointer;
+}
+
+#add-button:hover{
+transform: rotate(-90deg);
+transition: 0.4s;
 }
 
 .input-area{
   display: flex;
-  justify-content: center;
   align-items: center;
   background-color: rgb(255, 255, 255);
   height: 40px;
   max-width: fit-content;
   border-radius: 30px;
+}
+
+.plus {
+  --b: 2px; /* the thickness */
+  width: 15px; /* the size */
+  aspect-ratio: 1;
+  border: 10px solid #fff; /* the outer space */
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#fff 90deg,#000 0) 
+    calc(100% + var(--b)/2) calc(100% + var(--b)/2)/
+    calc(50%  + var(--b))   calc(50%  + var(--b));
 }
