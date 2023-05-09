@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    window.onload = function(){
+      let display = document.getElementById("display");
+      let startButton = document.getElementById("start");
+      let stopButton = document.getElementById("stop");
+      let checkButton = document.getElementById("check");
+      startButton.onclick = start;
+      checkButton.onclick = check;
+      let startTime, timer;
+
+      function start(){
+          startButton.onclick = null; //비활성화
+          stopButton.onclick =  stop;
+          startTime = new Date();
+          timer = setInterval(function(){
+            let now = new Date();
+            display.innerHTML = ((now-startTime)/1000).toFixed(2);
+          },10);
+    };
+
+      function stop(){
+        clearInterval(timer);
+        startButton.onclick = start;
+      };
+
+      function check(){
+        let stopTime = display.innerHTML;
+        let result = document.getElementById("result");
+        if(stopTime > 5.00 && stopTime < 6.00){
+          result.innerHTML= "승리!";
+        }else{
+          result.innerHTML= "패배!";
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>시간 멈추기 게임</h2>
+  
+  <p>5초와 6초 사이에 stop을 누르면 당신이 승리!</p>
+  <p id = "display">0.00</p>
+  <input id="start" type="button" value="start">
+  <input id="stop" type="button" value="stop">
+  <input id="check" type="button" value="check">
+  <small style="padding-left: 6em;">made by yoki</small>
+  <p id="result"></p>
+</body>
+</html>
