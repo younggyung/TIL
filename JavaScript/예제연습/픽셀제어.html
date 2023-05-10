@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>픽셀RGBA값을 찍어보자</title>
+</head>
+<style>
+ canvas{ 
+  border : 2px solid gray;}
+  #square{
+   width: 200px;
+   height: 200px;
+   border: 1px solid gray;
+  }
+</style>
+<script>
+ window.onload=function(){
+  let canvas = document.getElementById("mycanvas");
+  let ctx = canvas.getContext("2d");
+  let img = new Image(); 
+  img.onload=function(){
+   ctx.drawImage(img,0,0);
+   let imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+   imageData.getRGBA = function(m,n,i){
+    return this.data[this.width*4*n + 4*m+i];
+   };
+   let rgb = document.getElementById("rgb");
+   canvas.onclick = function(event){
+    let x = event.offsetX;
+    let y = event.offsetY;
+    let R = to3digit(imageData.getRGBA(x,y,0));
+    let G = to3digit(imageData.getRGBA(x,y,1));
+    let B = to3digit(imageData.getRGBA(x,y,2));
+    rgb.innerHTML = `
+    R:${R}
+    G:${G}
+    B:${B}`
+    let box_color = document.getElementById("square");
+    box_color.style.background= `rgb(${R},${G},${B})`;
+  };
+ };
+  img.src = "토끼.jpg"
+};
+
+  function to3digit(n){
+   return ("000"+n).slice(-3);
+  }
+</script>
+<body>
+ <h3>이미지 색상 RGB값 추출하기</h3>
+ <p>getImageData를 사용하면 이미지 객체의 width,height,data가 들어있는 imageData 객체를 가져올 수 있다. data 프로퍼티는 이미지의 픽셀값이 저장된 1차원 배열이다. 픽셀 하나하나의 색상값이 들어있다는 소리.. RGBA 순서로, data=[200,200,200,200] 이런식
+ </p>
+ <canvas id="mycanvas" width="640px" height="400px"></canvas>
+ <div><output id="rgb"></output></div>
+ <div id="square"></div>
+</body> 
+</html>

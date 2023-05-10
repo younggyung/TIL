@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-
+ 8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas 기본</title>
+  <script>
+    window.onload = function () {
+      //canvas 요소 가져오기
+      let canvas = document.getElementById("mycanvas");
+      //canvas 랜더링 컨텍스트 가져오기
+      let ctx = canvas.getContext("2d");
+      //그리기 : 좌표(50,60)에 너비200 높이100인 사각형 테두리
+      ctx.strokeStyle = "red"; //스타일 설정. 그림 그리기 전에 해줘야함
+      ctx.fillStyle = "green";
+      ctx.lineWidth = 0.1; //라인 굵기 : 초기값 1이고 양의정수로 굵기를 조정. 1미만의 소수점은 점점 연해진다
+      ctx.strokeRect(200,200,100,100);
+      ctx.fillRect(400,100,200,200);
+      ctx.clearRect(450,160,50,50);
+
+      //패쓰그리기 
+      let canvas2 = document.getElementById("secondCanvas");
+      let ctx2 = canvas2.getContext("2d");
+
+      ctx2.beginPath(); //패스를 기록하기 시작, 불러온다
+      ctx2.moveTo(100,50); //패스를 기록할 '시작점'을 지정한다(x,y) y가 세로행 x가 가로열
+      ctx2.lineTo(100,150); //x좌표와 y좌표를 선과 선으로 연결한다.(아직 보이지는 않음. 정의만 해준다)
+      ctx2.moveTo(50,100);
+      ctx2.lineTo(150,100);
+      ctx2.stroke(); //연결한걸 그린다. 이걸 꼭 해줘야 스트록!
+
+
+      //세번째 에제. 원호그려보기
+      ctx2.beginPath();
+      ctx2.arc(100,100,80,30 * Math.PI / 180,120 * Math.PI / 180,false);
+      //해석:: arc(x,y,radius,startAngle,endAngle,anticlockwise)
+      // x,y -> 중심좌표 , radius 반지름, startAngle 원호의 시작각도, endAngle :호의 끝 각도, anticlockwise : true은 시계반대방향 false는 시계방향
+      ctx2.stroke();
+      ctx2.fill();
+      ctx2.beginPath();
+      ctx2.arc(100,100,80,30 * Math.PI / 180,120 * Math.PI / 180,true);
+      ctx2.stroke();
+      ctx2.fill();
+
+      //원호와 선 조합해서 둥근 모서리 그리기 -> 불편함
+      ctx.beginPath();
+      ctx.moveTo(20,10);
+      ctx.lineTo(200,10);
+      ctx.arc(200,60,50,-Math.PI / 2,0,false);
+      ctx.lineTo(250,160);
+      ctx.stroke();
+
+
+      //원호 사용하여 둥근 모서리 그리기 : arcTo
+      ctx2.beginPath();
+      ctx2.moveTo(300,100);//x0,y0
+      ctx2.arcTo(500,100,400,300,30);//x1,y2,x2,y2,radius
+      ctx2.lineTo(400,300);//x2,y2
+      ctx2.stroke();
+
+
+      //둥근 사각형을 그리는 함수
+      function strokeRoundedRect(ctx,x,y,width,height,radius) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius,y);
+        ctx.arcTo(x + width,y,x + width,y + height,radius);
+        ctx.arcTo(x + width,y + width,x,y + height,radius);
+        ctx.arcTo(x,y + height,x,y,radius);
+        ctx.arcTo(x,y,x + height,y,radius);
+        ctx.stroke();
+      }
+
+      //함수호출
+      strokeRoundedRect(ctx,100,100,100,100,20);
+
+
+      //이미지 불러오기
+      //캔버스준비
+      let canvas3 = document.getElementById("thirdcanvas");
+      let ctx3 = canvas3.getContext("2d");
+      //이미지 객체 생성
+      let img = new Image();
+      img.src = "토끼.jpg"
+      // 이미지를 읽어들인후 캔버스에 그리기
+      img.onload = function () {
+        ctx3.drawImage(img,10,10,600,700,50,50,350,400);
+      };
+      //img.src= canvas.toDataURL(); //mycanvas에서 그린 도형을 이미지로 불러오는 방법임
+
+    }
+
+  </script>
+
+</head>
+
+<body>
+  <canvas id="mycanvas" width="640" height="400"></canvas>
+  <canvas id="secondCanvas" width="500" height="500"></canvas>
+  <canvas id="thirdcanvas" width="640" height="400"></canvas>
+</body>
+
+</html
