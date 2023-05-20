@@ -1,11 +1,10 @@
-import NewPost from "./NewPost";
 import Post from "./Post";
 import classes from "./PostList.module.css";
-import Modal from "./Modal";
 import { useState, useEffect } from "react";
 
-function PostList({ isPosting, onStopPosting }) {
+function PostList() {
   const [posts, setPosts] = useState([]);
+  const [isFetching , setIsFetching] = useState(false);
 
   // fetch('http://localhost:8080/posts').then(response => response.json()).then(data=>data.posts){
   //   setPosts(data.posts);
@@ -13,9 +12,11 @@ function PostList({ isPosting, onStopPosting }) {
 
   useEffect(() => {
     async function fetchPosts() {
+      setIsFetching(true);
       const response = await fetch("http://localhost:8080/posts");
       const resData = await response.json();
       setPosts(resData.posts);
+      setIsFetching(false);
     }
     fetchPosts();
   }, []);
@@ -33,26 +34,22 @@ function PostList({ isPosting, onStopPosting }) {
 
   return (
     <>
-      {isPosting && (
-        <Modal onClose={onStopPosting}>
-          <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
-        </Modal>
-      )}
-      {posts.length > 0 && (
+      {!isFetching && posts.length > 0 && (
         <ul className={classes.post}>
           {posts.map((post) => (
             <Post key={Math.random()} author={post.author} body={post.body} />
           ))}
         </ul>
       )}
-      {posts.length === 0 && (
+      {!isFetching && posts.length === 0 && (
         <div style={{ textAlign: "center", color: "white" }}>
           <h2>작성된 글이 없습니다.</h2>
           <p>글을 등록해보세요!</p>
         </div>
       )}
+      {isFetching && <div style={{textAlign : "center"}}><p>Loading...</p></div>}
     </>
   );
 }
-
+ 
 export default PostList;
